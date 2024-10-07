@@ -17,7 +17,7 @@ public class JobController {
     private JobUseCase jobUseCase;
 
     @PostMapping("/add")
-    public ResponseEntity<Object> create(@Valid @RequestBody JobEntity jobEntity) {
+    public ResponseEntity<Object> createJob(@Valid @RequestBody JobEntity jobEntity) {
         try {
             var result = this.jobUseCase.createJob(jobEntity);
             return ResponseEntity.ok(result);
