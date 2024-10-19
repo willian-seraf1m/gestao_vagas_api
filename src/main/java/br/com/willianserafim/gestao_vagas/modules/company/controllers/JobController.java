@@ -1,23 +1,41 @@
 package br.com.willianserafim.gestao_vagas.modules.company.controllers;
 
+import br.com.willianserafim.gestao_vagas.modules.company.dto.CreateJobDTO;
 import br.com.willianserafim.gestao_vagas.modules.company.entities.JobEntity;
-import br.com.willianserafim.gestao_vagas.modules.company.useCase.JobUseCase;
+import br.com.willianserafim.gestao_vagas.modules.company.useCases.JobUseCase;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/job")
+@RequestMapping("/company/job")
 public class JobController {
 
     @Autowired
     private JobUseCase jobUseCase;
 
+    @GetMapping("/all")
+    public List<JobEntity> findByAll() {
+        return jobUseCase.fingByAll();
+    }
+
     @PostMapping("/add")
-    public ResponseEntity<Object> createJob(@Valid @RequestBody JobEntity jobEntity) {
+    @PreAuthorize("hasRole('COMPANY')")
+    public ResponseEntity<Object> createJob(@Valid @RequestBody CreateJobDTO createJobDTO, HttpServletRequest request) {
+        var companyId = request.getAttribute("company_id");
+
+        var jobEntity = JobEntity.builder()
+                .benefits(createJobDTO.getBenefits())
+                .companyId(UUID.fromString(companyId.toString()))
+                .description(createJobDTO.getDescription())
+                .level(createJobDTO.getLevel())
+                .build();
         try {
             var result = this.jobUseCase.createJob(jobEntity);
             return ResponseEntity.ok(result);
@@ -27,9 +45,10 @@ public class JobController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Object> updateJob(@Valid @RequestBody JobEntity jobEntity) {
+    @PreAuthorize("hasRole('COMPANY')")
+    public ResponseEntity<Object> updateJob(@Valid @RequestBody JobEntity jobEntity, HttpServletRequest request) {
         try {
-            var result = this.jobUseCase.updateJob(jobEntity);
+            var result = this.jobUseCase.updateJob(jobEntity, request);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -37,9 +56,10 @@ public class JobController {
     }
 
     @DeleteMapping("/remove/{id}")
-    public ResponseEntity<Object> removeJob(@PathVariable UUID id) {
+    @PreAuthorize("hasRole('COMPANY')")
+    public ResponseEntity<Object> removeJob(@PathVariable UUID id, HttpServletRequest request) {
         try {
-            var result = this.jobUseCase.deleteJob(id);
+            var result = this.jobUseCase.deleteJob(id, request);
             return ResponseEntity.ok(result);
         } catch(Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

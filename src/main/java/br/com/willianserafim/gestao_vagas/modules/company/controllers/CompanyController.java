@@ -1,8 +1,9 @@
 package br.com.willianserafim.gestao_vagas.modules.company.controllers;
 
-import br.com.willianserafim.gestao_vagas.modules.candidate.CandidateEntity;
 import br.com.willianserafim.gestao_vagas.modules.company.entities.CompanyEntity;
-import br.com.willianserafim.gestao_vagas.modules.company.useCase.CompanyUseCase;
+import br.com.willianserafim.gestao_vagas.modules.company.useCases.CompanyUseCase;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +27,9 @@ public class CompanyController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Object> updateCompany(@RequestBody CompanyEntity companyEntity) {
+    public ResponseEntity<Object> updateCompany(@RequestBody CompanyEntity companyEntity, HttpServletRequest request) {
         try {
-            var result = this.companyUseCase.updateCompany(companyEntity);
+            var result = this.companyUseCase.updateCompany(companyEntity, request);
             return ResponseEntity.ok().body(result);
         }catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
