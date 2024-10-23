@@ -2,6 +2,8 @@ package br.com.willianserafim.gestao_vagas.modules.candidate.controllers;
 
 import br.com.willianserafim.gestao_vagas.modules.candidate.CandidateEntity;
 import br.com.willianserafim.gestao_vagas.modules.candidate.useCases.CandidateUseCase;
+import br.com.willianserafim.gestao_vagas.modules.company.dto.JobDTO;
+import br.com.willianserafim.gestao_vagas.modules.company.entities.JobEntity;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -30,6 +33,12 @@ public class CandidateController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/jobs")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    public List<JobDTO> listAllJobsByFilter(@RequestParam String filter) {
+        return this.candidateUseCase.listAllJobsByFilter(filter);
     }
 
     @PostMapping("/register")

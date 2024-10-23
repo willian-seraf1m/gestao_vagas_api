@@ -21,10 +21,14 @@ public class JobEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @NotBlank(message = "Esse campo é obrigatório")
     private String description;
 
     @NotBlank(message = "Esse campo é obrigatório")
     private String level;
+
+    @NotBlank(message = "Esse campo é obrigatório")
     private String benefits;
 
     @ManyToOne()

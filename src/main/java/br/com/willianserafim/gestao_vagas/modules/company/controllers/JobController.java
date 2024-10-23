@@ -1,6 +1,7 @@
 package br.com.willianserafim.gestao_vagas.modules.company.controllers;
 
 import br.com.willianserafim.gestao_vagas.modules.company.dto.CreateJobDTO;
+import br.com.willianserafim.gestao_vagas.modules.company.dto.JobDTO;
 import br.com.willianserafim.gestao_vagas.modules.company.entities.JobEntity;
 import br.com.willianserafim.gestao_vagas.modules.company.useCases.JobUseCase;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,18 +15,22 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/company/job")
+@RequestMapping("/company")
 public class JobController {
 
     @Autowired
     private JobUseCase jobUseCase;
+    private JobDTO jobDTO;
 
-    @GetMapping("/all")
-    public List<JobEntity> findByAll() {
-        return jobUseCase.fingByAll();
+    @GetMapping("/my-jobs")
+    @PreAuthorize("hasRole('COMPANY')")
+    public List<JobDTO> findByCompanyId(HttpServletRequest request) {
+        var companyId = UUID.fromString(request.getAttribute("company_id").toString());
+
+        return this.jobUseCase.findByCompanyId(companyId);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/add-job")
     @PreAuthorize("hasRole('COMPANY')")
     public ResponseEntity<Object> createJob(@Valid @RequestBody CreateJobDTO createJobDTO, HttpServletRequest request) {
         var companyId = request.getAttribute("company_id");
@@ -44,7 +49,7 @@ public class JobController {
         }
     }
 
-    @PutMapping("/update")
+    @PutMapping("/update-job")
     @PreAuthorize("hasRole('COMPANY')")
     public ResponseEntity<Object> updateJob(@Valid @RequestBody JobEntity jobEntity, HttpServletRequest request) {
         try {
@@ -55,7 +60,7 @@ public class JobController {
         }
     }
 
-    @DeleteMapping("/remove/{id}")
+    @DeleteMapping("/remove-job/{id}")
     @PreAuthorize("hasRole('COMPANY')")
     public ResponseEntity<Object> removeJob(@PathVariable UUID id, HttpServletRequest request) {
         try {

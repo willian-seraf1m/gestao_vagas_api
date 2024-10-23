@@ -4,6 +4,9 @@ import br.com.willianserafim.gestao_vagas.exceptions.UserFoundException;
 import br.com.willianserafim.gestao_vagas.modules.candidate.CandidateEntity;
 import br.com.willianserafim.gestao_vagas.modules.candidate.CandidateRepository;
 import br.com.willianserafim.gestao_vagas.modules.candidate.dto.ProfileCandidateResponseDTO;
+import br.com.willianserafim.gestao_vagas.modules.company.dto.JobConverterToDTO;
+import br.com.willianserafim.gestao_vagas.modules.company.dto.JobDTO;
+import br.com.willianserafim.gestao_vagas.modules.company.repositories.JobRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CandidateUseCase {
@@ -21,6 +26,15 @@ public class CandidateUseCase {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    private final JobRepository jobRepository;
+    private final JobConverterToDTO jobConverter;
+
+    @Autowired
+    public CandidateUseCase(JobRepository jobRepository, JobConverterToDTO jobConverter) {
+        this.jobRepository = jobRepository;
+        this.jobConverter = jobConverter;
+    }
 
     public ProfileCandidateResponseDTO getCandidateById(UUID idCandidate) {
         var candidate = this.candidateRepository.findById(idCandidate)
@@ -79,5 +93,12 @@ public class CandidateUseCase {
         Optional.ofNullable(updatedData.getCurriculum()).ifPresent(userExists::setCurriculum);
 
         return candidateRepository.save(userExists);
+    }
+
+    public List<JobDTO> listAllJobsByFilter(String filter) {
+        return this.jobRepository.findByDescriptionContaining(filter)
+                .stream()
+                .map(jobConverter::convertToJobDTO)
+                .collect(Collectors.toList());
     }
 }

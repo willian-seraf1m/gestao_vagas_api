@@ -1,5 +1,7 @@
 package br.com.willianserafim.gestao_vagas.modules.company.useCases;
 
+import br.com.willianserafim.gestao_vagas.modules.company.dto.JobConverterToDTO;
+import br.com.willianserafim.gestao_vagas.modules.company.dto.JobDTO;
 import br.com.willianserafim.gestao_vagas.modules.company.entities.JobEntity;
 import br.com.willianserafim.gestao_vagas.modules.company.repositories.JobRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -11,15 +13,25 @@ import org.springframework.stereotype.Service;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class JobUseCase {
 
-    @Autowired
-    private JobRepository jobRepository;
+    private final JobRepository jobRepository;
+    private final JobConverterToDTO jobConverter;
 
-    public List<JobEntity> fingByAll() {
-        return this.jobRepository.findAll();
+    @Autowired
+    public JobUseCase(JobRepository jobRepository, JobConverterToDTO jobConverter) {
+        this.jobRepository = jobRepository;
+        this.jobConverter = jobConverter;
+    }
+
+    public List<JobDTO> findByCompanyId(UUID id) {
+        return this.jobRepository.findByCompanyId(id)
+                .stream()
+                .map(jobConverter::convertToJobDTO)
+                .collect(Collectors.toList());
     }
 
     public JobEntity createJob(JobEntity jobEntity) {
