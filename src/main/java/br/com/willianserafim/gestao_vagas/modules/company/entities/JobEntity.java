@@ -23,6 +23,9 @@ public class JobEntity {
     private UUID id;
 
     @NotBlank(message = "Esse campo é obrigatório")
+    private String name;
+
+    @NotBlank(message = "Esse campo é obrigatório")
     private String description;
 
     @NotBlank(message = "Esse campo é obrigatório")

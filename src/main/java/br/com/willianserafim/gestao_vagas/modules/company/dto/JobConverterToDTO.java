@@ -18,6 +18,7 @@ public class JobConverterToDTO {
     public JobDTO convertToJobDTO(JobEntity job) {
         return new JobDTO(
                 job.getId(),
+                job.getName(),
                 job.getDescription(),
                 job.getLevel(),
                 job.getBenefits(),

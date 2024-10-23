@@ -1,9 +1,9 @@
 package br.com.willianserafim.gestao_vagas.modules.candidate.controllers;
 
-import br.com.willianserafim.gestao_vagas.modules.candidate.CandidateEntity;
+import br.com.willianserafim.gestao_vagas.modules.candidate.entities.CandidateEntity;
 import br.com.willianserafim.gestao_vagas.modules.candidate.useCases.CandidateUseCase;
 import br.com.willianserafim.gestao_vagas.modules.company.dto.JobDTO;
-import br.com.willianserafim.gestao_vagas.modules.company.entities.JobEntity;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class CandidateController {
     @Autowired
     private CandidateUseCase candidateUseCase;
 
-    @GetMapping("/")
+    @GetMapping("/profile")
     @PreAuthorize("hasRole('CANDIDATE')")
     public ResponseEntity<Object> getCandidateById(HttpServletRequest request) {
 
@@ -37,6 +37,7 @@ public class CandidateController {
 
     @GetMapping("/jobs")
     @PreAuthorize("hasRole('CANDIDATE')")
+    @SecurityRequirement(name = "jwt_auth")
     public List<JobDTO> listAllJobsByFilter(@RequestParam String filter) {
         return this.candidateUseCase.listAllJobsByFilter(filter);
     }

@@ -1,8 +1,8 @@
 package br.com.willianserafim.gestao_vagas.modules.candidate.useCases;
 
 import br.com.willianserafim.gestao_vagas.exceptions.UserFoundException;
-import br.com.willianserafim.gestao_vagas.modules.candidate.CandidateEntity;
-import br.com.willianserafim.gestao_vagas.modules.candidate.CandidateRepository;
+import br.com.willianserafim.gestao_vagas.modules.candidate.entities.CandidateEntity;
+import br.com.willianserafim.gestao_vagas.modules.candidate.repositories.CandidateRepository;
 import br.com.willianserafim.gestao_vagas.modules.candidate.dto.ProfileCandidateResponseDTO;
 import br.com.willianserafim.gestao_vagas.modules.company.dto.JobConverterToDTO;
 import br.com.willianserafim.gestao_vagas.modules.company.dto.JobDTO;
@@ -96,7 +96,7 @@ public class CandidateUseCase {
     }
 
     public List<JobDTO> listAllJobsByFilter(String filter) {
-        return this.jobRepository.findByDescriptionContaining(filter)
+        return this.jobRepository.findByDescriptionContainingIgnoreCase(filter)
                 .stream()
                 .map(jobConverter::convertToJobDTO)
                 .collect(Collectors.toList());

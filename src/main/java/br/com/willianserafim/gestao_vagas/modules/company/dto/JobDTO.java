@@ -9,6 +9,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class JobDTO {
     private UUID id;
+    private String name;
     private String description;
     private String level;
     private String benefits;

@@ -36,6 +36,7 @@ public class JobController {
         var companyId = request.getAttribute("company_id");
 
         var jobEntity = JobEntity.builder()
+                .name(createJobDTO.getName())
                 .benefits(createJobDTO.getBenefits())
                 .companyId(UUID.fromString(companyId.toString()))
                 .description(createJobDTO.getDescription())
