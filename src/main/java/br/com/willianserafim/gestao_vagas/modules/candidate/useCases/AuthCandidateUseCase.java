@@ -1,6 +1,6 @@
 package br.com.willianserafim.gestao_vagas.modules.candidate.useCases;
 
-import br.com.willianserafim.gestao_vagas.modules.candidate.repositories.CandidateRepository;
+import br.com.willianserafim.gestao_vagas.modules.candidate.CandidateRepository;
 import br.com.willianserafim.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDTO;
 import br.com.willianserafim.gestao_vagas.modules.candidate.dto.AuthCandidateResponseDTO;
 import com.auth0.jwt.JWT;

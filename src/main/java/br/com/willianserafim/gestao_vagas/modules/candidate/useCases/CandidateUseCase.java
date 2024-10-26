@@ -1,8 +1,8 @@
 package br.com.willianserafim.gestao_vagas.modules.candidate.useCases;
 
 import br.com.willianserafim.gestao_vagas.exceptions.UserFoundException;
-import br.com.willianserafim.gestao_vagas.modules.candidate.entities.CandidateEntity;
-import br.com.willianserafim.gestao_vagas.modules.candidate.repositories.CandidateRepository;
+import br.com.willianserafim.gestao_vagas.modules.candidate.CandidateEntity;
+import br.com.willianserafim.gestao_vagas.modules.candidate.CandidateRepository;
 import br.com.willianserafim.gestao_vagas.modules.candidate.dto.ProfileCandidateResponseDTO;
 import br.com.willianserafim.gestao_vagas.modules.company.dto.JobConverterToDTO;
 import br.com.willianserafim.gestao_vagas.modules.company.dto.JobDTO;
