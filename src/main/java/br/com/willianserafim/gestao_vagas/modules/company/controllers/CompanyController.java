@@ -9,12 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/company")
 public class CompanyController {
 
     @Autowired
     private CompanyUseCase companyUseCase;
+
+    @GetMapping("/profile")
+    public CompanyEntity findCompanyById() {
+        return this.companyUseCase.findCompanyById();
+    }
 
     @PostMapping("/register")
     public ResponseEntity<Object> createCompany(@Valid @RequestBody CompanyEntity companyEntity) {
@@ -27,9 +34,9 @@ public class CompanyController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Object> updateCompany(@RequestBody CompanyEntity companyEntity, HttpServletRequest request) {
+    public ResponseEntity<Object> updateCompany(@RequestBody CompanyEntity companyEntity) {
         try {
-            var result = this.companyUseCase.updateCompany(companyEntity, request);
+            var result = this.companyUseCase.updateCompany(companyEntity);
             return ResponseEntity.ok().body(result);
         }catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

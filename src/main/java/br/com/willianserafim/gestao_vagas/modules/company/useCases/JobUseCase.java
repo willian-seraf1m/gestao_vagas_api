@@ -35,6 +35,7 @@ public class JobUseCase {
     }
 
     public JobEntity createJob(JobEntity jobEntity) {
+        System.out.println(jobEntity.getStatus());
         return this.jobRepository.save(jobEntity);
     }
 
@@ -51,14 +52,14 @@ public class JobUseCase {
             throw new AccessDeniedException("You are not authorized to update this job.");
         }
 
+        job.setName(updateData.getName());
         job.setDescription(updateData.getDescription());
         job.setLevel(updateData.getLevel());
-        job.setBenefits(updateData.getBenefits());
 
         return ResponseEntity.ok(jobRepository.save(job));
     }
 
-    public ResponseEntity<Object> deleteJob(UUID id, HttpServletRequest request) throws AccessDeniedException {
+    public JobEntity closeJob(UUID id, HttpServletRequest request) throws AccessDeniedException {
         JobEntity job = jobRepository
                 .findById(id)
                 .orElseThrow(EntityNotFoundException::new);
@@ -68,11 +69,12 @@ public class JobUseCase {
 
 
         if (!requestCompanyId.equals(jobCompanyId)) {
-            throw new AccessDeniedException("You are not authorized to delete this job.");
+            throw new AccessDeniedException("You are not authorized to close this job.");
         }
 
-        jobRepository.delete(job);
-        return ResponseEntity.noContent().build();
+        job.setStatus(JobEntity.JobStatus.CLOSED);
+
+        return jobRepository.save(job);
     }
 
 }

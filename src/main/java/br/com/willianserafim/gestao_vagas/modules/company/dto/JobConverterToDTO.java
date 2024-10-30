@@ -21,7 +21,8 @@ public class JobConverterToDTO {
                 job.getName(),
                 job.getDescription(),
                 job.getLevel(),
-                job.getBenefits(),
+                job.getNumberJobApplications(),
+                job.getStatus(),
                 convertToCompanyDTO(job.getCompanyEntity())
         );
     }

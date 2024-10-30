@@ -6,6 +6,8 @@ import br.com.willianserafim.gestao_vagas.modules.company.repositories.CompanyRe
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,14 +37,23 @@ public class CompanyUseCase {
         return this.companyRepository.save(companyEntity);
     }
 
-    public CompanyEntity updateCompany(CompanyEntity updatedData, HttpServletRequest request) throws AccessDeniedException {
-        var companyId = UUID.fromString(request.getAttribute("company_id").toString());
+    public CompanyEntity findCompanyById() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UUID authenticatedCompanyId = UUID.fromString(authentication.getName());
+
+        return this.companyRepository.findById(authenticatedCompanyId)
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
+    public CompanyEntity updateCompany(CompanyEntity updatedData) throws AccessDeniedException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UUID authenticatedCompanyId = UUID.fromString(authentication.getName());
 
         CompanyEntity companyExists = companyRepository
                 .findById(updatedData.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Company not found!"));
 
-        if(!companyId.equals(companyExists.getId())) {
+        if(!authenticatedCompanyId.equals(companyExists.getId())) {
             throw new AccessDeniedException("You are not authorized to update this company.");
         }
 
