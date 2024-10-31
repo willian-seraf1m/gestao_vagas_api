@@ -2,6 +2,7 @@ package br.com.willianserafim.gestao_vagas.modules.company.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,8 +32,8 @@ public class JobEntity {
     @NotBlank(message = "Esse campo é obrigatório")
     private String level;
 
-    @NotBlank(message = "Esse campo é obrigatório")
-    private String benefits;
+    @NotNull
+    private int numberJobApplications;
 
     @ManyToOne()
     @JoinColumn(name = "company_id", insertable = false, updatable = false)
@@ -43,4 +44,13 @@ public class JobEntity {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @Enumerated(EnumType.STRING)
+    private JobStatus status;
+
+    @NotNull
+    public enum JobStatus {
+        ACTIVE,
+        CLOSED
+    }
 }

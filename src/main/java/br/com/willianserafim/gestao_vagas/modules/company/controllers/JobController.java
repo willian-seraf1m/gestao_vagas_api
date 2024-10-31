@@ -37,10 +37,11 @@ public class JobController {
 
         var jobEntity = JobEntity.builder()
                 .name(createJobDTO.getName())
-                .benefits(createJobDTO.getBenefits())
                 .companyId(UUID.fromString(companyId.toString()))
                 .description(createJobDTO.getDescription())
                 .level(createJobDTO.getLevel())
+                .status(JobEntity.JobStatus.ACTIVE)
+                .numberJobApplications(0)
                 .build();
         try {
             var result = this.jobUseCase.createJob(jobEntity);
@@ -61,11 +62,11 @@ public class JobController {
         }
     }
 
-    @DeleteMapping("/remove-job/{id}")
+    @DeleteMapping("/close-job/{id}")
     @PreAuthorize("hasRole('COMPANY')")
-    public ResponseEntity<Object> removeJob(@PathVariable UUID id, HttpServletRequest request) {
+    public ResponseEntity<Object> closeJob(@PathVariable UUID id, HttpServletRequest request) {
         try {
-            var result = this.jobUseCase.deleteJob(id, request);
+            var result = this.jobUseCase.closeJob(id, request);
             return ResponseEntity.ok(result);
         } catch(Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

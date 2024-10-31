@@ -17,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ApplicationJobEntity {
 
-    public ApplicationJobEntity(UUID candidateId, UUID jobId, String status) {
+    public ApplicationJobEntity(UUID candidateId, UUID jobId, ApplicationStatus status) {
         this.candidateId = candidateId;
         this.jobId = jobId;
         this.status = status;
@@ -41,11 +41,15 @@ public class ApplicationJobEntity {
     @Column(name = "job_id", nullable = false)
     private UUID jobId;
 
-    @NotBlank(message = "Status não pode ser vazio")
-    @Size(max = 15)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ApplicationStatus status;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    public enum ApplicationStatus {
+        IN_PROGRESS,
+        FINISHED
+    }
 
 }

@@ -32,6 +32,7 @@ public class CandidateController {
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasRole('CANDIDATE')")
     public ResponseEntity<Object> updateCandidate(@RequestBody CandidateEntity candidateEntity, HttpServletRequest request) {
         try {
             var result = this.candidateUseCase.updateCandidate(candidateEntity, request);
@@ -43,12 +44,9 @@ public class CandidateController {
 
     @GetMapping("/profile")
     @PreAuthorize("hasRole('CANDIDATE')")
-    public ResponseEntity<Object> getCandidateById(HttpServletRequest request) {
-
-        var idCandidate = request.getAttribute("candidate_id");
-
+    public ResponseEntity<Object> getCandidateById() {
         try {
-            var result = candidateUseCase.getCandidateById(UUID.fromString(idCandidate.toString()));
+            var result = candidateUseCase.getCandidateById();
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

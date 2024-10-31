@@ -10,6 +10,8 @@ import br.com.willianserafim.gestao_vagas.modules.company.repositories.JobReposi
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +38,11 @@ public class CandidateUseCase {
         this.jobConverter = jobConverter;
     }
 
-    public ProfileCandidateResponseDTO getCandidateById(UUID idCandidate) {
-        var candidate = this.candidateRepository.findById(idCandidate)
+    public ProfileCandidateResponseDTO getCandidateById() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UUID authenticatedUserId = UUID.fromString(authentication.getName());
+
+        var candidate = this.candidateRepository.findById(authenticatedUserId)
                 .orElseThrow(EntityNotFoundException::new);
 
         ProfileCandidateResponseDTO candidateDTO =
