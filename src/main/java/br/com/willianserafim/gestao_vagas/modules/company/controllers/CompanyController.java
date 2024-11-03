@@ -2,6 +2,7 @@ package br.com.willianserafim.gestao_vagas.modules.company.controllers;
 
 import br.com.willianserafim.gestao_vagas.modules.company.entities.CompanyEntity;
 import br.com.willianserafim.gestao_vagas.modules.company.useCases.CompanyUseCase;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -18,11 +19,6 @@ public class CompanyController {
     @Autowired
     private CompanyUseCase companyUseCase;
 
-    @GetMapping("/profile")
-    public CompanyEntity findCompanyById() {
-        return this.companyUseCase.findCompanyById();
-    }
-
     @PostMapping("/register")
     public ResponseEntity<Object> createCompany(@Valid @RequestBody CompanyEntity companyEntity) {
         try {
@@ -33,7 +29,14 @@ public class CompanyController {
         }
     }
 
+    @GetMapping("/profile")
+    @SecurityRequirement(name = "jwt_auth")
+    public CompanyEntity findCompanyById() {
+        return this.companyUseCase.findCompanyById();
+    }
+
     @PutMapping("/update")
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<Object> updateCompany(@RequestBody CompanyEntity companyEntity) {
         try {
             var result = this.companyUseCase.updateCompany(companyEntity);

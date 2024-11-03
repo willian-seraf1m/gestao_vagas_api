@@ -13,6 +13,7 @@ public class JobDTO {
     private String name;
     private String description;
     private String level;
+    private String locality;
     private int numberJobApplications;
     private JobEntity.JobStatus status;
     private CompanyDTO company;

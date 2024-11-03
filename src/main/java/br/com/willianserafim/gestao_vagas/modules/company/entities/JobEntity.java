@@ -32,6 +32,9 @@ public class JobEntity {
     @NotBlank(message = "Esse campo é obrigatório")
     private String level;
 
+    @NotBlank
+    private String locality;
+
     @NotNull
     private int numberJobApplications;
 

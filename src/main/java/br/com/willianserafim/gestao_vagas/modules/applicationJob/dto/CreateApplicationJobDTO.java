@@ -10,5 +10,4 @@ import java.util.UUID;
 public class CreateApplicationJobDTO {
     private UUID candidateId;
     private UUID jobId;
-    private String status;
 }
