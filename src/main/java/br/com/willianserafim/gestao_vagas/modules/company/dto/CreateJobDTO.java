@@ -10,4 +10,5 @@ public class CreateJobDTO {
     private int numberJobApplications;
     private JobEntity.JobStatus status;
     private String level;
+    private String locality;
 }

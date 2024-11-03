@@ -100,10 +100,16 @@ public class CandidateUseCase {
         return candidateRepository.save(userExists);
     }
 
-    public List<JobDTO> listAllJobsByFilter(String filter) {
-        return this.jobRepository.findByDescriptionContainingIgnoreCase(filter)
+    public List<JobDTO> listAllJobsByFilter(String name, String description, String locality) {
+        return this.jobRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseAndLocality(name, description, locality)
                 .stream()
                 .map(jobConverter::convertToJobDTO)
                 .collect(Collectors.toList());
+    }
+
+    public JobDTO findJobById(UUID id) {
+        return this.jobRepository.findById(id)
+                .map(jobConverter::convertToJobDTO)
+                .orElseThrow(() -> new EntityNotFoundException(("job not found with id:" + id)));
     }
 }

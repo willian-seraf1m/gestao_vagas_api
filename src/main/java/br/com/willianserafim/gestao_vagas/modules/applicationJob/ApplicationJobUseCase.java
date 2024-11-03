@@ -1,6 +1,7 @@
 package br.com.willianserafim.gestao_vagas.modules.applicationJob;
 
 import br.com.willianserafim.gestao_vagas.exceptions.ApplicationJobFoundExeption;
+import br.com.willianserafim.gestao_vagas.exceptions.JobClosedException;
 import br.com.willianserafim.gestao_vagas.modules.applicationJob.dto.ApplicationJobResponseDTO;
 import br.com.willianserafim.gestao_vagas.modules.applicationJob.dto.CreateApplicationJobDTO;
 import br.com.willianserafim.gestao_vagas.modules.company.dto.JobConverterToDTO;
@@ -39,6 +40,10 @@ public class ApplicationJobUseCase {
 
         if(applicationExists) {
             throw new ApplicationJobFoundExeption();
+        }
+
+        if(job.getStatus().equals(JobEntity.JobStatus.CLOSED)) {
+            throw new JobClosedException();
         }
 
         job.setNumberJobApplications(job.getNumberJobApplications() + 1);

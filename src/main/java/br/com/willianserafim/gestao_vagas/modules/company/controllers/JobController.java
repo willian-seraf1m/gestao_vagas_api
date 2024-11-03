@@ -4,6 +4,7 @@ import br.com.willianserafim.gestao_vagas.modules.company.dto.CreateJobDTO;
 import br.com.willianserafim.gestao_vagas.modules.company.dto.JobDTO;
 import br.com.willianserafim.gestao_vagas.modules.company.entities.JobEntity;
 import br.com.willianserafim.gestao_vagas.modules.company.useCases.JobUseCase;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/company")
+@SecurityRequirement(name = "jwt_auth")
 public class JobController {
 
     @Autowired
@@ -24,6 +26,7 @@ public class JobController {
 
     @GetMapping("/my-jobs")
     @PreAuthorize("hasRole('COMPANY')")
+
     public List<JobDTO> findByCompanyId(HttpServletRequest request) {
         var companyId = UUID.fromString(request.getAttribute("company_id").toString());
 
@@ -40,6 +43,7 @@ public class JobController {
                 .companyId(UUID.fromString(companyId.toString()))
                 .description(createJobDTO.getDescription())
                 .level(createJobDTO.getLevel())
+                .locality(createJobDTO.getLocality())
                 .status(JobEntity.JobStatus.ACTIVE)
                 .numberJobApplications(0)
                 .build();
@@ -53,20 +57,20 @@ public class JobController {
 
     @PutMapping("/update-job")
     @PreAuthorize("hasRole('COMPANY')")
-    public ResponseEntity<Object> updateJob(@Valid @RequestBody JobEntity jobEntity, HttpServletRequest request) {
+    public ResponseEntity<Object> updateJob(@Valid @RequestBody JobEntity jobEntity) {
         try {
-            var result = this.jobUseCase.updateJob(jobEntity, request);
+            var result = this.jobUseCase.updateJob(jobEntity);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @DeleteMapping("/close-job/{id}")
+    @PutMapping("/close-job/{id}")
     @PreAuthorize("hasRole('COMPANY')")
-    public ResponseEntity<Object> closeJob(@PathVariable UUID id, HttpServletRequest request) {
+    public ResponseEntity<Object> closeJob(@PathVariable UUID id) {
         try {
-            var result = this.jobUseCase.closeJob(id, request);
+            var result = this.jobUseCase.closeJob(id);
             return ResponseEntity.ok(result);
         } catch(Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

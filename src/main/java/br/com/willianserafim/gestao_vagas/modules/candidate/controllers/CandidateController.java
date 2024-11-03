@@ -33,6 +33,7 @@ public class CandidateController {
 
     @PutMapping("/update")
     @PreAuthorize("hasRole('CANDIDATE')")
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<Object> updateCandidate(@RequestBody CandidateEntity candidateEntity, HttpServletRequest request) {
         try {
             var result = this.candidateUseCase.updateCandidate(candidateEntity, request);
@@ -44,6 +45,7 @@ public class CandidateController {
 
     @GetMapping("/profile")
     @PreAuthorize("hasRole('CANDIDATE')")
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<Object> getCandidateById() {
         try {
             var result = candidateUseCase.getCandidateById();
@@ -56,7 +58,18 @@ public class CandidateController {
     @GetMapping("/jobs")
     @PreAuthorize("hasRole('CANDIDATE')")
     @SecurityRequirement(name = "jwt_auth")
-    public List<JobDTO> listAllJobsByFilter(@RequestParam String filter) {
-        return this.candidateUseCase.listAllJobsByFilter(filter);
+    public List<JobDTO> listAllJobsByFilter(@RequestParam String filter, @RequestParam String locality) {
+        return this.candidateUseCase.listAllJobsByFilter(filter, filter, locality);
+    }
+
+    @GetMapping("/job/{id}")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    @SecurityRequirement(name = "jwt_auth")
+    public ResponseEntity<Object> findJobById(@PathVariable UUID id) {
+        try {
+            return ResponseEntity.ok(this.candidateUseCase.findJobById(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
