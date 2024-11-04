@@ -1,13 +1,10 @@
-# API Gestão Vagas 👨‍💼📑
+# API Gestão Vagas 📑
 
 Bem-vindo(a) ao repositório do projeto **Gestão de Vagas**, um projeto desenvolvido para gerenciar vagas de emprego e candidaturas. Desenvolvi esse projeto para aprofundar meus conhecimentos em desenvolvimento de APIs REST com Java e Spring Boot. O projeto fornece uma API REST para auxiliar empresas e candidatos em processos de aplicação, facilitando o acompanhamento de candidatos e vagas.
 
 ## Índice
 - [Sobre o Projeto](#sobre-o-projeto)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Configuração do Ambiente](#configuração-do-ambiente)
-- [Instalação](#instalação)
-- [Uso](#uso)
 - [Endpoints](#endpoints)
 
 ---
