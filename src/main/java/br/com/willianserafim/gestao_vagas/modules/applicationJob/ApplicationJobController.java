@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 public class ApplicationJobController {
 
     @Autowired
-    private ApplicationJobUseCase applicationJobUseCase;
+    private ApplicationJobService applicationJobService;
 
     @PostMapping("/application")
     public ResponseEntity<Object> newApplyForJob(@RequestBody CreateApplicationJobDTO application) {
          try {
-             return ResponseEntity.ok(this.applicationJobUseCase.newApplyForJob(application));
+             return ResponseEntity.ok(this.applicationJobService.newApplyForJob(application));
          } catch (Exception e) {
              return ResponseEntity.badRequest().body(e.getMessage());
          }
@@ -28,6 +28,6 @@ public class ApplicationJobController {
     @GetMapping("/my-applications")
     @PreAuthorize("hasRole('CANDIDATE')")
     public ResponseEntity<Object> findJobApplicationByCandidateId() {
-        return ResponseEntity.ok().body(this.applicationJobUseCase.findJobApplicationByCandidateId());
+        return ResponseEntity.ok().body(this.applicationJobService.findJobApplicationByCandidateId());
     }
 }

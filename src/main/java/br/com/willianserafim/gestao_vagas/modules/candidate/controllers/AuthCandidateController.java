@@ -1,8 +1,7 @@
 package br.com.willianserafim.gestao_vagas.modules.candidate.controllers;
 
 import br.com.willianserafim.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDTO;
-import br.com.willianserafim.gestao_vagas.modules.candidate.dto.AuthCandidateResponseDTO;
-import br.com.willianserafim.gestao_vagas.modules.candidate.useCases.AuthCandidateUseCase;
+import br.com.willianserafim.gestao_vagas.modules.candidate.services.AuthCandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthCandidateController {
 
     @Autowired
-    private AuthCandidateUseCase authCandidateUseCase;
+    private AuthCandidateService authCandidateService;
 
     @PostMapping("/auth")
     public ResponseEntity<Object> auth(@RequestBody AuthCandidateRequestDTO authCandidateRequestDTO) {
         try {
-            var token = this.authCandidateUseCase.execute(authCandidateRequestDTO);
+            var token = this.authCandidateService.execute(authCandidateRequestDTO);
             return ResponseEntity.ok().body(token);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());

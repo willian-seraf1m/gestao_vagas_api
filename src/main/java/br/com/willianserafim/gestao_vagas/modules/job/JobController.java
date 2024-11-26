@@ -1,9 +1,7 @@
-package br.com.willianserafim.gestao_vagas.modules.company.controllers;
+package br.com.willianserafim.gestao_vagas.modules.job;
 
-import br.com.willianserafim.gestao_vagas.modules.company.dto.CreateJobDTO;
-import br.com.willianserafim.gestao_vagas.modules.company.dto.JobDTO;
-import br.com.willianserafim.gestao_vagas.modules.company.entities.JobEntity;
-import br.com.willianserafim.gestao_vagas.modules.company.useCases.JobUseCase;
+import br.com.willianserafim.gestao_vagas.modules.job.dto.CreateJobDTO;
+import br.com.willianserafim.gestao_vagas.modules.job.dto.JobDTO;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -21,16 +19,15 @@ import java.util.UUID;
 public class JobController {
 
     @Autowired
-    private JobUseCase jobUseCase;
+    private JobService jobService;
     private JobDTO jobDTO;
 
     @GetMapping("/my-jobs")
     @PreAuthorize("hasRole('COMPANY')")
-
     public List<JobDTO> findByCompanyId(HttpServletRequest request) {
         var companyId = UUID.fromString(request.getAttribute("company_id").toString());
 
-        return this.jobUseCase.findByCompanyId(companyId);
+        return this.jobService.findByCompanyId(companyId);
     }
 
     @PostMapping("/add-job")
@@ -48,7 +45,7 @@ public class JobController {
                 .numberJobApplications(0)
                 .build();
         try {
-            var result = this.jobUseCase.createJob(jobEntity);
+            var result = this.jobService.createJob(jobEntity);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -59,7 +56,7 @@ public class JobController {
     @PreAuthorize("hasRole('COMPANY')")
     public ResponseEntity<Object> updateJob(@Valid @RequestBody JobEntity jobEntity) {
         try {
-            var result = this.jobUseCase.updateJob(jobEntity);
+            var result = this.jobService.updateJob(jobEntity);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -70,7 +67,7 @@ public class JobController {
     @PreAuthorize("hasRole('COMPANY')")
     public ResponseEntity<Object> closeJob(@PathVariable UUID id) {
         try {
-            var result = this.jobUseCase.closeJob(id);
+            var result = this.jobService.closeJob(id);
             return ResponseEntity.ok(result);
         } catch(Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

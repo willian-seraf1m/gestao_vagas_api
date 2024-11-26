@@ -1,6 +1,7 @@
-package br.com.willianserafim.gestao_vagas.modules.company.dto;
+package br.com.willianserafim.gestao_vagas.modules.job.dto;
 
-import br.com.willianserafim.gestao_vagas.modules.company.entities.JobEntity;
+import br.com.willianserafim.gestao_vagas.modules.company.dto.CompanyDTO;
+import br.com.willianserafim.gestao_vagas.modules.job.JobEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

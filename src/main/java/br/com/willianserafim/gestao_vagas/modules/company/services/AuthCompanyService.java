@@ -1,8 +1,8 @@
-package br.com.willianserafim.gestao_vagas.modules.company.useCases;
+package br.com.willianserafim.gestao_vagas.modules.company.services;
 
 import br.com.willianserafim.gestao_vagas.modules.company.dto.AuthCompanyDTO;
 import br.com.willianserafim.gestao_vagas.modules.company.dto.AuthCompanyResponseDTO;
-import br.com.willianserafim.gestao_vagas.modules.company.repositories.CompanyRepository;
+import br.com.willianserafim.gestao_vagas.modules.company.CompanyRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.time.Instant;
 import java.util.Arrays;
 
 @Service
-public class AuthCompanyUseCase {
+public class AuthCompanyService {
 
     @Value("${security.token.secret}")
     private String secretKey;

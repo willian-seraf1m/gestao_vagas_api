@@ -1,4 +1,4 @@
-package br.com.willianserafim.gestao_vagas.modules.candidate.useCases;
+package br.com.willianserafim.gestao_vagas.modules.candidate.services;
 
 import br.com.willianserafim.gestao_vagas.modules.candidate.CandidateRepository;
 import br.com.willianserafim.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDTO;
@@ -17,7 +17,7 @@ import java.time.Instant;
 import java.util.Arrays;
 
 @Service
-public class AuthCandidateUseCase {
+public class AuthCandidateService {
 
     @Value("${security.token.secret.candidate}")
     private String secretKey;

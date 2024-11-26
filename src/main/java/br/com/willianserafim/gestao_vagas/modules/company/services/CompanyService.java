@@ -1,28 +1,34 @@
-package br.com.willianserafim.gestao_vagas.modules.company.useCases;
+package br.com.willianserafim.gestao_vagas.modules.company.services;
 
+import br.com.willianserafim.gestao_vagas.aws.S3Service;
 import br.com.willianserafim.gestao_vagas.exceptions.UserFoundException;
-import br.com.willianserafim.gestao_vagas.modules.company.entities.CompanyEntity;
-import br.com.willianserafim.gestao_vagas.modules.company.repositories.CompanyRepository;
+import br.com.willianserafim.gestao_vagas.modules.candidate.CandidateEntity;
+import br.com.willianserafim.gestao_vagas.modules.candidate.CandidateRepository;
+import br.com.willianserafim.gestao_vagas.modules.company.CompanyEntity;
+import br.com.willianserafim.gestao_vagas.modules.company.CompanyRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import software.amazon.awssdk.core.ResponseInputStream;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
 import java.nio.file.AccessDeniedException;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class CompanyUseCase {
+public class CompanyService {
 
-    @Autowired
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
+    private  final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public CompanyService(CompanyRepository companyRepository, PasswordEncoder passwordEncoder) {
+        this.companyRepository = companyRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public CompanyEntity createCompany(CompanyEntity companyEntity) {
         this.companyRepository.

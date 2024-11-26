@@ -4,9 +4,8 @@ import br.com.willianserafim.gestao_vagas.exceptions.ApplicationJobFoundExeption
 import br.com.willianserafim.gestao_vagas.exceptions.JobClosedException;
 import br.com.willianserafim.gestao_vagas.modules.applicationJob.dto.ApplicationJobResponseDTO;
 import br.com.willianserafim.gestao_vagas.modules.applicationJob.dto.CreateApplicationJobDTO;
-import br.com.willianserafim.gestao_vagas.modules.company.dto.JobConverterToDTO;
-import br.com.willianserafim.gestao_vagas.modules.company.entities.JobEntity;
-import br.com.willianserafim.gestao_vagas.modules.company.repositories.JobRepository;
+import br.com.willianserafim.gestao_vagas.modules.job.JobEntity;
+import br.com.willianserafim.gestao_vagas.modules.job.JobRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,14 +13,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.file.AccessDeniedException;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class ApplicationJobUseCase {
+public class ApplicationJobService {
 
     @Autowired
     private ApplicationJobRepository applicationRepository;

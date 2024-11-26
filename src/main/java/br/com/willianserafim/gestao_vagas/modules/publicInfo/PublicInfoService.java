@@ -1,20 +1,19 @@
 package br.com.willianserafim.gestao_vagas.modules.publicInfo;
 
 import br.com.willianserafim.gestao_vagas.modules.candidate.CandidateRepository;
-import br.com.willianserafim.gestao_vagas.modules.company.repositories.CompanyRepository;
-import br.com.willianserafim.gestao_vagas.modules.company.repositories.JobRepository;
+import br.com.willianserafim.gestao_vagas.modules.company.CompanyRepository;
+import br.com.willianserafim.gestao_vagas.modules.job.JobRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 @Service
-public class PublicInfoUseCase {
+public class PublicInfoService {
     private final CandidateRepository candidateRepository;
     private final CompanyRepository companyRepository;
     private final JobRepository jobRepository;
 
-    public PublicInfoUseCase(CandidateRepository candidateRepository,
+    public PublicInfoService(CandidateRepository candidateRepository,
                              CompanyRepository companyRepository,
                              JobRepository jobRepository) {
         this.candidateRepository = candidateRepository;

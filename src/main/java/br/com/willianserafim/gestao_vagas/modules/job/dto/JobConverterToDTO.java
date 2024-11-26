@@ -1,7 +1,8 @@
-package br.com.willianserafim.gestao_vagas.modules.company.dto;
+package br.com.willianserafim.gestao_vagas.modules.job.dto;
 
-import br.com.willianserafim.gestao_vagas.modules.company.entities.CompanyEntity;
-import br.com.willianserafim.gestao_vagas.modules.company.entities.JobEntity;
+import br.com.willianserafim.gestao_vagas.modules.company.dto.CompanyDTO;
+import br.com.willianserafim.gestao_vagas.modules.company.CompanyEntity;
+import br.com.willianserafim.gestao_vagas.modules.job.JobEntity;
 import org.springframework.stereotype.Component;
 
 @Component

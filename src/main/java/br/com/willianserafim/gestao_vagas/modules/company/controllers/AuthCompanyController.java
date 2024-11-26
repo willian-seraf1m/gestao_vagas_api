@@ -1,7 +1,7 @@
 package br.com.willianserafim.gestao_vagas.modules.company.controllers;
 
 import br.com.willianserafim.gestao_vagas.modules.company.dto.AuthCompanyDTO;
-import br.com.willianserafim.gestao_vagas.modules.company.useCases.AuthCompanyUseCase;
+import br.com.willianserafim.gestao_vagas.modules.company.services.AuthCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthCompanyController {
 
     @Autowired
-    private AuthCompanyUseCase authCompanyUseCase;
+    private AuthCompanyService authCompanyService;
 
     @PostMapping("/auth")
     public ResponseEntity<Object> create(@RequestBody AuthCompanyDTO authCompanyDTO)  {
         try {
-            var result = this.authCompanyUseCase.execute(authCompanyDTO);
+            var result = this.authCompanyService.execute(authCompanyDTO);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());

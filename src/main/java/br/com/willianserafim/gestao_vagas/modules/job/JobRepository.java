@@ -1,8 +1,6 @@
-package br.com.willianserafim.gestao_vagas.modules.company.repositories;
+package br.com.willianserafim.gestao_vagas.modules.job;
 
-import br.com.willianserafim.gestao_vagas.modules.company.entities.JobEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
 import java.util.List;

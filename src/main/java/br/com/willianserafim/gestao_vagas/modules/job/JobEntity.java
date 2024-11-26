@@ -1,5 +1,6 @@
-package br.com.willianserafim.gestao_vagas.modules.company.entities;
+package br.com.willianserafim.gestao_vagas.modules.job;
 
+import br.com.willianserafim.gestao_vagas.modules.company.CompanyEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
