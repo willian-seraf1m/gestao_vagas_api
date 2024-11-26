@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/public-info")
 public class PublicInfoController {
     @Autowired
-    PublicInfoUseCase publicInfoUseCase;
+    PublicInfoService publicInfoService;
 
     @GetMapping
     public PublicInfoDTO getPublicInfo() {
-        return this.publicInfoUseCase.getPublicInfo();
+        return this.publicInfoService.getPublicInfo();
     }
 }

@@ -1,6 +1,5 @@
-package br.com.willianserafim.gestao_vagas.modules.company.repositories;
+package br.com.willianserafim.gestao_vagas.modules.company;
 
-import br.com.willianserafim.gestao_vagas.modules.company.entities.CompanyEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

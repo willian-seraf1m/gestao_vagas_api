@@ -11,11 +11,12 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProfileCandidateResponseDTO {
+public class CandidateDTO {
 
     private UUID id;
     private String name;
     private String username;
     private String email;
     private String description;
+    private String curriculumUrl;
 }

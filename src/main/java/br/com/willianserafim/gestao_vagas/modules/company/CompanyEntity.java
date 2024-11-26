@@ -1,4 +1,4 @@
-package br.com.willianserafim.gestao_vagas.modules.company.entities;
+package br.com.willianserafim.gestao_vagas.modules.company;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

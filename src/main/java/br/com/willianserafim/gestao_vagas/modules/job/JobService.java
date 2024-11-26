@@ -1,14 +1,9 @@
-package br.com.willianserafim.gestao_vagas.modules.company.useCases;
+package br.com.willianserafim.gestao_vagas.modules.job;
 
-import br.com.willianserafim.gestao_vagas.modules.company.dto.JobConverterToDTO;
-import br.com.willianserafim.gestao_vagas.modules.company.dto.JobDTO;
-import br.com.willianserafim.gestao_vagas.modules.company.entities.JobEntity;
-import br.com.willianserafim.gestao_vagas.modules.company.repositories.JobRepository;
+import br.com.willianserafim.gestao_vagas.modules.job.dto.JobConverterToDTO;
+import br.com.willianserafim.gestao_vagas.modules.job.dto.JobDTO;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +15,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class JobUseCase {
+public class JobService {
 
     private final JobRepository jobRepository;
     private final JobConverterToDTO jobConverter;
@@ -29,7 +24,7 @@ public class JobUseCase {
     JobConverterToDTO jobConverterToDTO;
 
     @Autowired
-    public JobUseCase(JobRepository jobRepository, JobConverterToDTO jobConverter) {
+    public JobService(JobRepository jobRepository, JobConverterToDTO jobConverter) {
         this.jobRepository = jobRepository;
         this.jobConverter = jobConverter;
     }

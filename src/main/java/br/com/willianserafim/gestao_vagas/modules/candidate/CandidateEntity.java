@@ -36,7 +36,7 @@ public class CandidateEntity {
     @NotBlank
     private String description;
 
-    private String curriculum;
+    private String curriculumUrl;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

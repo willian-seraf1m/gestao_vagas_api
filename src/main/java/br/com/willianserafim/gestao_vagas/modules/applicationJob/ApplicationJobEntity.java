@@ -1,10 +1,8 @@
 package br.com.willianserafim.gestao_vagas.modules.applicationJob;
 
 import br.com.willianserafim.gestao_vagas.modules.candidate.CandidateEntity;
-import br.com.willianserafim.gestao_vagas.modules.company.entities.JobEntity;
+import br.com.willianserafim.gestao_vagas.modules.job.JobEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
